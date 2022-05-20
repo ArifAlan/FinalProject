@@ -22,14 +22,15 @@ namespace Business.Concrete
 
         public ProductManager(IProductDal productDal, ICategoryService categoryService)
         {
-            _productDal = productDal;
+             _productDal = productDal;
             _categoryService = categoryService;
         }
         [SecuredOperation("product.Add,Admin")]
         [ValidationAspect(typeof(ProductValidator))]//Attribute 
         public IResult Add(Product product)
         {
-            //aynı isimde ürün eklenemez
+            //aynı isimde ürün eklenemez.
+
             //Eğer mevcut kategori sayısı 15'i geçtiyse sisteme yeni ürün eklenemez.
            IResult result= BusinessRules.Run(CheckIfProductCountCategoryCorrect(product.CategoryId),
                 CheckIfProductNameExists(product.ProductName));
